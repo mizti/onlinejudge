@@ -5,7 +5,7 @@ while (line = gets)!=nil do
   h = line.split(" ")[-1].to_i
   current_map = Array.new
   h.times do
-    lat = gets
+    lat = gets.chomp
     current_map.push lat.split(" ").map{|i| i.to_i}
   end
 

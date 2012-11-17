@@ -6,7 +6,7 @@ class IslandCounter
   def neighbors(y, x)
     w = map[0].length
     h = map.length
-    neighbor_list =[[y-1, x-1], [y-1, x], [y-1, x+1], [y, x-1], [y, x+1], [y+1, x-1], [y+1, x], [y+1, x+1]]
+    neighbor_list =[[y-1, x], [y, x-1], [y, x+1], [y+1, x]]
     return neighbor_list.select{|i| i[0] >= 0 && i[0]<h && i[1] >=0 && i[1]<w }.select{|i| @map[i[0]][i[1]] == 1 } 
   end
   
