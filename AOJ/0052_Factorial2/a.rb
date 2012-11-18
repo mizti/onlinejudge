@@ -1,20 +1,26 @@
 # encoding: utf-8
-require './island_counter'
+class ZeroCounter
+  attr_accessor:num 
+  attr_accessor:num_zero
+  def initialize(i)
+    @num = i
+    @num_zero = [count_num_of_primes(2), count_num_of_primes(5)].min
+    p @num_zero
+ end
 
-current_map = Array.new
-while (line = gets) do
-line = line.chomp
-  if line != "" then
-    current_map.push line.split("").map{|i| i.to_i}
-  else
-    if current_map.size > 1 then
-    ic = IslandCounter.new(current_map)
-    p ic.explorer_all_islands
-    current_map = Array.new
+  def count_num_of_primes(prime)
+    num_pf = 0
+    i = prime
+    while @num / i > 0 do
+      num_pf += @num / i
+      i = i * prime 
     end
+    return num_pf
   end
 end
-if current_map.size > 1 then
-  ic = IslandCounter.new(current_map)
-  p ic.explorer_all_islands
+
+while (line = gets) do
+  if line.to_i != 0 then
+    ZeroCounter.new(line.to_i)
+  end
 end
