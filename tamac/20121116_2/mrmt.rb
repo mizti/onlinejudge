@@ -41,48 +41,49 @@ end
 
 ###  Main Function
 def main
-  # 全体サイズの読み込み
-  size = STDIN.gets.chomp.split(' ')
+  loop do 
+    $area_no = 0 
 
-  if size[0] != size[1]
-    puts "cell size error!"
-    exit
-  end
+    # 全体サイズの読み込み
+    size = STDIN.gets.chomp.split(' ')
+  
+    size_x = size[0].to_i
+    size_y = size[1].to_i
 
-  size = size[0].to_i
+    break if size_x == 0 && size_y == 0
 
-  # 情報の読み込み
-  cellmap = Array.new
-  size.times do |count|
-    cell_row = Array.new
-    STDIN.gets.chomp.split(' ').each do |element|
-      if element == "0"
-        cell_row << Cell.new(false)
-      else
-        cell_row << Cell.new(true)
+    # 情報の読み込み
+    cellmap = Array.new
+    size_y.times do |count|
+      cell_row = Array.new
+      STDIN.gets.chomp.split(' ').each do |element|
+        if element == "0"
+          cell_row << Cell.new(false)
+        else
+          cell_row << Cell.new(true)
+        end
+      end
+      cellmap << cell_row
+    end
+
+    # セル同士の紐付けを行う
+    size_y.times do |y|
+      size_x.times do |x|
+        cellmap[y][x].up    = cellmap[y - 1][x] if y > 0
+        cellmap[y][x].down  = cellmap[y + 1][x] if y < size_y - 1 
+        cellmap[y][x].left  = cellmap[y][x - 1] if x > 0 
+        cellmap[y][x].right = cellmap[y][x + 1] if x < size_x - 1
       end
     end
-    cellmap << cell_row
-  end
 
-  # セル同士の紐付けを行う
-  size.times do |i|
-    size.times do |j|
-      cellmap[i][j].up    = cellmap[i - 1][j] if i > 0
-      cellmap[i][j].down  = cellmap[i + 1][j] if i < size - 1 
-      cellmap[i][j].left  = cellmap[i][j - 1] if j > 0 
-      cellmap[i][j].right = cellmap[i][j + 1] if j < size - 1
+    # すべてのセルを評価する
+    cellmap.flatten.each do |cell|
+      cell.eval
     end
-  end
 
-  # すべてのセルを評価する
-  cellmap.flatten.each do |cell|
-    cell.eval
+    puts "A number of infected area is #{$area_no}."
   end
-
-  puts "A number of infected area is #{$area_no}."
 end
 
-$area_no = 0 
 main
 
