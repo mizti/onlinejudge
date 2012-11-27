@@ -1,0 +1,36 @@
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: ftp.iij.ad.jp
+ * extras: ftp.iij.ad.jp
+ * updates: ftp.iij.ad.jp
+Setting up Install Process
+Resolving Dependencies
+--> Running transaction check
+---> Package java-1.6.0-openjdk.x86_64 1:1.6.0.0-1.28.1.10.10.el5_8 set to be updated
+--> Processing Dependency: tzdata-java for package: java-1.6.0-openjdk
+--> Processing Dependency: libgif.so.4()(64bit) for package: java-1.6.0-openjdk
+--> Running transaction check
+---> Package giflib.x86_64 0:4.1.3-7.3.3.el5 set to be updated
+---> Package tzdata-java.x86_64 0:2012i-2.el5 set to be updated
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package              Arch     Version                          Repository
+                                                                           Size
+================================================================================
+Installing:
+ java-1.6.0-openjdk   x86_64   1:1.6.0.0-1.28.1.10.10.el5_8     updates    36 M
+Installing for dependencies:
+ giflib               x86_64   4.1.3-7.3.3.el5                  base       39 k
+ tzdata-java          x86_64   2012i-2.el5                      updates   183 k
+
+Transaction Summary
+================================================================================
+Install       3 Package(s)
+Upgrade       0 Package(s)
+
+Total download size: 36 M
+Is this ok [y/N]: Exiting on user Command
+Complete!
