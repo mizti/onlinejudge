@@ -1,4 +1,5 @@
 #include <vector>
+#include <map>
 #include <string>
 #include <iostream>
 #include <stdio.h>
@@ -9,29 +10,24 @@ public:
 	int fuga;
 	int bestInvitation(vector <string> first, vector <string> second)
 	{
-		int max = 0;
+		map <string, int> dic;
 		for(int i=0;i<first.size();i++){
-			string word = first[i];
-			int num_person = 0;
-			for (int j=0;j<first.size();j++){
-				if(first[j] == word || second[j] == word) num_person++;
-			}
-			if(num_person > max){
-				max = num_person;
-			}
+			dic[first[i]] = 0;
+			dic[second[i]] = 0;
+		}
+		
+		for(int i=0;i<first.size();i++){
+			dic[first[i]]++;
+			dic[second[i]]++;
 		}
 
-		for(int i=0;i<second.size();i++){
-			string word = second[i];
-			int num_person = 0;
-			for (int j=0;j<first.size();j++){
-				if(first[j] == word || second[j] == word) num_person++;
-			}
-			if(num_person > max){
-				max = num_person;
-			}
+		int ans=0;
+		map <string, int>::iterator it;
+		for( it = dic.begin(); it != dic.end(); it++){
+			if(ans < it->second) ans = it->second;
 		}
-		return max;
+
+		return ans;
 	}
 };
 
@@ -45,7 +41,7 @@ int main(){
 
 	second.push_back("e");	
 	second.push_back("f");	
-	second.push_back("g");	
+	second.push_back("a");	
 	second.push_back("h");	
 	InterestingParty ip;
 	cout << ip.bestInvitation(first, second);
