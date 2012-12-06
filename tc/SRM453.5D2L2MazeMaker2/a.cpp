@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <iostream>
+#include <queue>
 using namespace std;
 
 class MazeMaker {
@@ -12,6 +13,8 @@ public:
 	int stepMap[50][50];
 	vector <int> moveRows, moveCols;
 	vector <string> mazeMap;
+	queue<int> queueX;
+	queue<int> queueY;
 	int longestPath(vector <string> maze, int startRow, int startCol, vector <int> moveRow, vector <int> moveCol){
 		moveRows = moveRow;
 		moveCols = moveCol;
@@ -27,40 +30,50 @@ public:
 			}
 		}
 		stepMap[startRow][startCol] = 0;
-		for(int i=0; i<moveRow.size() ; i++){
-			jump(startRow, startCol, moveRow[i], moveCol[i], 1);
+
+
+		queueX.push(startCol);
+		queueY.push(startRow);
+		stepMap[startCol][startRow] = 0;
+		while(queueX.size() > 0){
+			//jump_from(queueX.pop(), queueY.pop());
+			hoge(2,2);
 		}
+
 		int maxStep = 0;
+
 		for(int i=0; i<maze.size() ;i++){
 			for(int j=0; j<maze[0].size(); j++){
 				if(stepMap[i][j]>maxStep) maxStep = stepMap[i][j];
-			//dump_stepMap();
 			}
 		}
 		if(maxStep == INT_MAX) maxStep = -1;
 		return maxStep;
 	}
-	void jump(int startRow, int startCol, int moveY, int moveX, int num_step){
-		int x = startCol + moveX;
-		int y = startRow + moveY;
-		if(y >= mazeMap.size() || y < 0){
-			return;
+	void hoge(int x, int y){
+		cout <<"hoge"<<endl;
+	}
+	void jump_from(int x, int y){
+		int current_step = stepMap[x][y];
+		for(int i=0; i < moveRows.size(); i++){
+			int next_x = x + moveCols[i];
+			int next_y = y + moveRows[i];
+			if(next_y >= mazeMap.size() || next_y < 0){
+				continue;
+			}
+			if(next_x >= mazeMap[0].size() || next_x < 0){
+				continue;	
+			}
+			if(stepMap[next_y][next_x] <= current_step + 1){
+				continue;
+			}
+			if(stepMap[next_y][next_x] == -1){
+				continue;
+			}
+			stepMap[next_y][next_x] = current_step + 1;
+			queueX.push(next_x);
+			queueY.push(next_y);
 		}
-		if(x >= mazeMap[0].size() || x < 0){
-			return;	
-		}
-		if(num_step >= stepMap[y][x]){
-			return;
-		}
-		if(stepMap[y][x] == -1){
-			return;
-		}
-		stepMap[y][x] = num_step;
-		for(int i=0; i<moveRows.size() ; i++){
-			jump(y, x, moveRows[i], moveCols[i], num_step+1);
-	//		dump_stepMap();
-		}
-		return;
 	}
 	void dump_stepMap(){
 		for(int i=0; i < mazeMap.size() ;i++){
