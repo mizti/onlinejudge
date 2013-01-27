@@ -6,38 +6,32 @@
 #include <limits.h>
 #include <iostream>
 #include <queue>
-using namespace std;
+#include <math.h>
+//using namespace std;
+int ws[5] = {3, 4, 1, 2, 3};
+int ps[5] = {2, 3, 2, 3, 6};
+int max = 10;
+int dp[6][11];
 
-class Knapsac {
-public:
-	vector<int> w;
-	vector<int> p;
-	int max_weight;
-	int calc(int max_w, vector<int> ws, vector<int> ps){
-		w = ws;
-		p = ps;
-		max_weight = max_w;
-		return 1;
+int knapsack(int n, int w){
+	if(w>max) return -1;
+	if(n>=5) return 0;
+	if(dp[n][w] >= 0) return dp[n][w];
+	int a = knapsack(n+1, w);
+	int b = knapsack(n+1, w+ ws[n]) + ps[n];
+	if(a>b){
+		dp[n][w] = a;
+		return a; 
+	}else{
+		dp[n][w] = b;
+		return b;
 	}
-	int max_value(){
-		
-	}
-};
-
+}
 int main(){
-	Knapsac knap;
-	vector<int> ws;
-	ws.push_back(3);
-	ws.push_back(4);
-	ws.push_back(1);
-	ws.push_back(2);
-	ws.push_back(3);
-	
-	vector<int> ps;
-	ps.push_back(2);
-	ps.push_back(3);
-	ps.push_back(2);
-	ps.push_back(3);
-	ps.push_back(6);
-	cout << knap.max_value(10, ws, ps);
+	for(int i=0; i<6 ; i++){
+		for(int j=0; j<11; j++){
+			dp[i][j] = -1;
+		}
+	}
+	printf("%d", knapsack(0,0));	
 }

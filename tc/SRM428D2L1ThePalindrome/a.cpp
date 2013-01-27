@@ -17,7 +17,7 @@ public:
 	}
 	bool is_palindrome(string s){
 		for(int i=0; i < s.size()/2 ; i++){
-			if(s.substr(i,1) != s.substr(s.size()-1-i, 1) ){
+			if(s.substr(i, 1) != s.substr(s.size()-1-i, 1) ){
 				return false;
 			}
 		}
